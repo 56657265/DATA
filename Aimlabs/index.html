@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aim Pro Training</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Page 1: Main Mode Selection -->
+        <section id="page-main-mode" class="page active">
+            <h1 class="title">TRAINING MODE SELECT</h1>
+            <div class="split-container">
+                <button class="mode-card" data-mode="hit-to-remove" onclick="selectMainMode('hit-to-remove')">
+                    <div class="content">
+                        <h2>HIT TO REMOVE</h2>
+                        <p>타격 제거 모드</p>
+                        <div class="description">
+                            <ul>
+                                <li>과녁을 맞춰야만 사라집니다.</li>
+                                <li>정확도와 침착함을 훈련하세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="hover-bg"></div>
+                </button>
+                <button class="mode-card" data-mode="auto-despawn" onclick="selectMainMode('auto-despawn')">
+                    <div class="content">
+                        <h2>AUTO DESPAWN</h2>
+                        <p>자동 제거 모드 (0.675s)</p>
+                        <div class="description">
+                            <ul>
+                                <li>0.675초 후 자동으로 사라집니다.</li>
+                                <li>반응 속도와 시야 전환을 훈련하세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="hover-bg"></div>
+                </button>
+            </div>
+        </section>
+
+        <!-- Page 2: Sub Mode Selection -->
+        <section id="page-sub-mode" class="page">
+            <h1 class="title">TARGET BEHAVIOR</h1>
+            <div class="tri-container">
+                <button class="mode-card" onclick="selectSubMode('headshot')">
+                    <div class="content">
+                        <h2>HEADSHOT<br>ONLY</h2>
+                        <p>헤드샷 전용</p>
+                        <div class="desc-sm">머리 부위 정밀 타격 훈련</div>
+                    </div>
+                </button>
+                <button class="mode-card" onclick="selectSubMode('random-weakpoint')">
+                    <div class="content">
+                        <h2>RANDOM<br>WEAKPOINT</h2>
+                        <p>랜덤 취약 부위</p>
+                        <div class="desc-sm">무작위 빨간 부위 식별 및 타격</div>
+                    </div>
+                </button>
+                <button class="mode-card" onclick="selectSubMode('moving')">
+                    <div class="content">
+                        <h2>MOVING<br>SILHOUETTE</h2>
+                        <p>움직이는 실루엣</p>
+                        <div class="desc-sm">이동하는 타겟 트래킹 훈련</div>
+                    </div>
+                </button>
+            </div>
+            <button class="back-btn" onclick="goBack()">← BACK</button>
+        </section>
+
+        <!-- Page 3: Game -->
+        <section id="page-game" class="page">
+            <div id="game-ui">
+                <div class="hud-top">
+                    <div class="score-box">
+                        <span class="label">SCORE</span>
+                        <span id="score-display">0</span>
+                    </div>
+                    <div class="timer-box">
+                        <span class="label">TIME</span>
+                        <span id="time-display">01:30</span>
+                    </div>
+                </div>
+            </div>
+            <canvas id="game-canvas"></canvas>
+            
+            <div id="game-over-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h2>SESSION COMPLETE</h2>
+                    <div class="final-score">
+                        <span>SCORE</span>
+                        <h1 id="final-score-val">0</h1>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <span class="label">Accuracy</span>
+                            <span class="val" id="final-accuracy">0%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Hits</span>
+                            <span class="val" id="final-hits">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Misses</span>
+                            <span class="val" id="final-misses">0</span>
+                        </div>
+                    </div>
+                    <button class="primary-btn" onclick="restartGame()">RETRY SESSION</button>
+                    <button class="secondary-btn" onclick="goHome()">MAIN MENU</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
