@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Chamber - The Royal Card Game</title>
+    <meta name="description" content="A premium memory card game with high-stakes mechanics and multiplayer support.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🃏</text></svg>">
+</head>
+
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <h1>Memory Chamber</h1>
+            <p>테이블을 준비하는 중...</p>
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="menu-overlay" class="overlay active">
+        <div class="menu-container">
+            <h1 class="game-title">Memory Chamber</h1>
+            <p class="game-subtitle">기억력, 전략, 그리고 승리</p>
+
+            <div class="menu-form">
+                <div class="form-group">
+                    <label>게임 모드</label>
+                    <div class="mode-selector">
+                        <button class="mode-btn active" data-mode="solo">개인 (Solo)</button>
+                        <button class="mode-btn" data-mode="multi">멀티 (Multi)</button>
+                    </div>
+                </div>
+
+                <div class="form-group hidden" id="player-count-group">
+                    <label>플레이어 수</label>
+                    <div class="player-selector">
+                        <button class="player-btn active" data-count="2">2인</button>
+                        <button class="player-btn" data-count="3">3인</button>
+                        <button class="player-btn" data-count="4">4인</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>카드 수: <span id="card-count-display">42</span>장</label>
+                    <input type="range" id="card-count-slider" min="22" max="62" step="4" value="42">
+                    <p class="small-text">특수 카드 포함</p>
+                </div>
+
+                <button id="start-btn" class="primary-btn">게임 시작</button>
+            </div>
+
+            <div class="how-to-play">
+                <h3>게임 규칙</h3>
+                <ul>
+                    <li>같은 카드 2장을 찾아 소유하세요.</li>
+                    <li><span class="highlight">셔플 카드</span>: 모든 카드 위치가 섞입니다. (턴 종료)</li>
+                    <li><span class="highlight">폭탄 카드</span>: (멀티 전용) 이번 턴 소득 없음. (턴 종료)</li>
+                    <li>가장 많은 카드를 가진 플레이어가 승리합니다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Environment (3D) -->
+    <div id="game-wrapper">
+        <div id="room">
+            <!-- Floor -->
+            <div id="floor"></div>
+
+            <!-- Chairs -->
+            <div class="chair chair-bottom"></div>
+            <div class="chair chair-top"></div>
+            <div class="chair chair-left"></div>
+            <div class="chair chair-right"></div>
+
+            <!-- Table -->
+            <div id="table">
+                <div class="table-surface"></div>
+                <div id="card-grid">
+                    <!-- Cards will be injected here JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HUD Layer -->
+    <div id="ui-layer" class="hidden">
+        <div class="turn-indicator">
+            <h2 id="current-turn-label">Player 1의 턴</h2>
+        </div>
+
+        <div class="score-board" id="score-board">
+            <!-- Scores injected by JS -->
+            <!-- e.g. <div class="player-score p1 active">P1: 5</div> -->
+        </div>
+
+        <button id="menu-btn" class="icon-btn" title="메뉴로 돌아가기">🏠</button>
+    </div>
+
+    <!-- Interaction Blockers / VFX -->
+    <div id="shuffle-overlay" class="vfx-overlay hidden">
+        <div class="vfx-text">SHUFFLE</div>
+    </div>
+    <div id="bomb-overlay" class="vfx-overlay hidden">
+        <div class="vfx-text">BOMB!</div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over-screen" class="overlay hidden">
+        <div class="result-container">
+            <h1 class="result-title">게임 종료</h1>
+            <div id="winner-display" class="winner-display">
+                <!-- Winner Info -->
+            </div>
+            <div id="final-scores" class="final-scores">
+                <!-- Scores -->
+            </div>
+            <button id="restart-btn" class="primary-btn">메인 메뉴로</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

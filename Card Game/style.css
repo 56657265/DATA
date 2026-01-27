@@ -1,0 +1,661 @@
+/* Global Reset & Fonts */
+:root {
+    --bg-color: #1a1a1a;
+    --primary-gold: #c5a059;
+    --primary-gold-dim: #8a6e36;
+    --text-color: #f0f0f0;
+    --card-width: 80px;
+    --card-height: 112px;
+    --table-size: 800px;
+    /* Square table */
+    --wood-texture: url('assets/wood.png');
+    --card-back: url('assets/card_back.png');
+    --perspective: 1200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Custom cursor attempt - fallbacks to standard pointer */
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" style="fill:white;stroke:black;stroke-width:1px;"><path d="M9,2 L9,7 L7,7 L7,13 L3,13 L3,18 L19,18 L19,13 L15,13 L15,7 L13,7 L13,2 L9,2 Z" transform="rotate(-45 12 12)"/></svg>') 10 10, pointer;
+}
+
+/* Better SVG for hand cursor that looks like a pointing finger */
+body {
+    background-color: #050505;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    /* Force cursor on body */
+    cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    color: var(--primary-gold);
+}
+
+/* UI Overlay & Menu */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.menu-container,
+.result-container {
+    background: rgba(20, 20, 20, 0.9);
+    border: 2px solid var(--primary-gold-dim);
+    padding: 3rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(197, 160, 89, 0.2);
+    max-width: 600px;
+    width: 90%;
+}
+
+.game-title {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.game-subtitle {
+    color: #aaa;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--primary-gold);
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.mode-selector,
+.player-selector {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    background: transparent;
+    border: 1px solid var(--primary-gold-dim);
+    color: #ccc;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+button:hover {
+    border-color: var(--primary-gold);
+    color: white;
+    box-shadow: 0 0 10px rgba(197, 160, 89, 0.2);
+}
+
+button.active {
+    background: var(--primary-gold);
+    color: black;
+    border-color: var(--primary-gold);
+    font-weight: bold;
+}
+
+input[type=range] {
+    width: 100%;
+    accent-color: var(--primary-gold);
+    background: transparent;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--primary-gold-dim), var(--primary-gold));
+    color: black;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: none;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(197, 160, 89, 0.4);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.small-text {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+.how-to-play {
+    margin-top: 2rem;
+    border-top: 1px solid #333;
+    padding-top: 1rem;
+    text-align: left;
+}
+
+.how-to-play h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.how-to-play li {
+    font-size: 0.9rem;
+    color: #bbb;
+    margin-bottom: 5px;
+    list-style-position: inside;
+}
+
+.highlight {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+/* Game Environment (3D) */
+#game-wrapper {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    perspective: var(--perspective);
+    background: #050505;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#room {
+    width: var(--table-size);
+    height: var(--table-size);
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Floor */
+#floor {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: var(--wood-texture);
+    background-size: 500px;
+    transform: translateZ(-300px);
+    /* Lower than table */
+    filter: brightness(0.3);
+    pointer-events: none;
+}
+
+/* Table */
+#table {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.table-surface {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: var(--wood-texture);
+    background-size: 800px;
+    /* Different scale */
+    border-radius: 20px;
+    box-shadow:
+        inset 0 0 100px rgba(0, 0, 0, 0.8),
+        0 20px 50px rgba(0, 0, 0, 0.8);
+    /* Reflective Shine overlay */
+}
+
+.table-surface::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.4) 80%);
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+/* Card Grid */
+#card-grid {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
+    gap: 10px;
+    justify-items: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    transform: translateZ(5px);
+    /* Slightly above table */
+}
+
+/* Card Style */
+.card {
+    width: var(--card-width);
+    height: var(--card-height);
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateY(180deg);
+    /* Start face down (back visible) -> Logic: Face Down = 180? No, usually Back is 180.
+    Let's say: 
+    Front (Content): 0deg
+    Back (Cover): 180deg
+    Start state: Show Back. So rotateY(180deg).
+    To reveal: rotateY(0deg).
+    
+    Wait, standard is:
+    .face { backface-visibility: hidden; }
+    .front { transform: rotateY(0deg); }
+    .back { transform: rotateY(180deg); }
+    
+    If I want to show Back initally:
+    Container transform: rotateY(180deg).
+    Reveal: rotateY(0deg).
+    */
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+    transform: rotateZ(calc(var(--table-rotation, 0deg) * -1)) rotateY(180deg) translateY(-10px);
+    /* Hover effect when face down */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.card.flipped:hover {
+    transform: rotateZ(calc(var(--table-rotation, 0deg) * -1)) rotateY(0deg) translateY(0);
+    /* No hover move if flipped */
+}
+
+.card.flipped {
+    transform: rotateY(0deg);
+}
+
+.card.matched {
+    transform: rotateZ(calc(var(--table-rotation, 0deg) * -1)) rotateY(0deg) scale(0.9);
+    opacity: 0.5;
+    pointer-events: none;
+    box-shadow: 0 0 15px var(--primary-gold);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    background: white;
+    border: 2px solid #ddd;
+}
+
+.card-front {
+    transform: rotateY(0deg);
+    /* Content */
+    background: #fffafa;
+    color: #333;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    /* Cover */
+    background-image: var(--card-back);
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #111;
+}
+
+/* UI Layer */
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.turn-indicator {
+    text-align: center;
+    padding-top: 20px;
+}
+
+#current-turn-label {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 30px;
+    border-radius: 50px;
+    border: 1px solid var(--primary-gold);
+    color: var(--primary-gold);
+    display: inline-block;
+    backdrop-filter: blur(5px);
+}
+
+.score-board {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+.player-score {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: #aaa;
+    border: 1px solid transparent;
+    min-width: 100px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.player-score.active {
+    color: var(--primary-gold);
+    border-color: var(--primary-gold);
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
+}
+
+#menu-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    pointer-events: auto;
+    font-size: 1.5rem;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+/* VFX Overlays */
+.vfx-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInOut 2s ease forwards;
+    pointer-events: none;
+}
+
+.vfx-text {
+    font-family: 'Cinzel', serif;
+    font-size: 5rem;
+    color: #ff4757;
+    text-shadow: 0 0 20px rgba(255, 71, 87, 0.8);
+    transform: scale(0);
+    animation: popText 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+#shuffle-overlay .vfx-text {
+    color: #5352ed;
+    text-shadow: 0 0 20px rgba(83, 82, 237, 0.8);
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Ensure it hides */
+}
+
+@keyframes popText {
+    0% {
+        transform: scale(0);
+    }
+
+    80% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Loading */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 2000;
+    color: var(--primary-gold);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.spinner {
+    margin: 20px auto;
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(197, 160, 89, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-gold);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Chairs */
+.chair {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background-image: var(--wood-texture);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    transform-style: preserve-3d;
+}
+
+.chair::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background: #3e2723;
+    /* Cushion */
+    border-radius: 5px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+/* Positioning Chairs relative to 800x800 Room */
+/* Room is centered. 0,0 is top-left of room? No, Room is relative. */
+/* Let's center them. */
+.chair-bottom {
+    bottom: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.chair-top {
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%) rotateZ(180deg);
+}
+
+.chair-left {
+    left: -150px;
+    top: 50%;
+    transform: translateY(-50%) rotateZ(-90deg);
+}
+
+.chair-right {
+    right: -150px;
+    top: 50%;
+    transform: translateY(-50%) rotateZ(90deg);
+}
+
+/* --- Perspective Fix Overrides - REVERTED for Fixed Camera --- */
+.card {
+    transform: rotateY(180deg);
+}
+
+.card:hover {
+    transform: rotateY(180deg) translateY(-10px);
+}
+
+.card.flipped {
+    transform: rotateY(0deg);
+}
+
+.card.flipped:hover {
+    transform: rotateY(0deg);
+}
+
+.card.matched {
+    transform: rotateY(0deg) scale(0.9);
+}
+
+
+/* Special Card Removal */
+.card.removed {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0);
+}
+
+
+/* v3 Update: Fixed Camera & Active Player */
+.player-score.active {
+    font-size: 1.2rem;
+    color: #ffd700;
+    /* Gold */
+    background: rgba(197, 160, 89, 0.2);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    /* Strong Glow */
+    border: 2px solid #ffd700;
+    transform: scale(1.15) translateY(-5px);
+    z-index: 10;
+}
+
+@keyframes spinClockwise {
+    0% {
+        transform: translate(var(--gather-x, 0px), var(--gather-y, 0px)) rotateY(180deg) rotateZ(0deg) scale(1);
+    }
+
+    50% {
+        transform: translate(var(--gather-x, 0px), var(--gather-y, 0px)) rotateY(180deg) rotateZ(180deg) scale(1.1);
+    }
+
+    100% {
+        transform: translate(var(--gather-x, 0px), var(--gather-y, 0px)) rotateY(180deg) rotateZ(360deg) scale(1);
+    }
+}
+
+@keyframes spinCounterClockwise {
+    0% {
+        transform: translate(var(--gather-x, 0px), var(--gather-y, 0px)) rotateY(180deg) rotateZ(0deg) scale(1);
+    }
+
+    50% {
+        transform: translate(var(--gather-x, 0px), var(--gather-y, 0px)) rotateY(180deg) rotateZ(-180deg) scale(1.1);
+    }
+
+    100% {
+        transform: translate(var(--gather-x, 0px), var(--gather-y, 0px)) rotateY(180deg) rotateZ(-360deg) scale(1);
+    }
+}
+
+.card.shuffling {
+    z-index: 1000 !important;
+    pointer-events: none;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure cards are backface hidden appropriately */
+.card-face {
+    backface-visibility: hidden;
+}
