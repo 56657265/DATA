@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOI Master Class | 세영코딩연구소</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a; /* Slate 900 */
+            --accent: #3b82f6;  /* Blue 500 */
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Header Section */
+        header {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-top: 10px;
+            font-weight: 400;
+        }
+
+        .instructor-tag {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 5px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Container & Grid */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 30px 0 20px 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Card Style */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .step-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: #eff6ff;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin: 10px 0 0 0;
+        }
+
+        .card-footer {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            header h1 { font-size: 1.8rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>중등정보올림피아드 마스터 반</h1>
+        <p>C언어 심화 로직 및 자료구조 실습 커리큘럼</p>
+        <div class="instructor-tag">세영코딩연구소 | 공학박사 Kim</div>
+    </header>
+
+    <div class="container">
+        
+        <div class="section-title">포인터와 메모리 참조</div>
+        <div class="grid">
+            <a href="https://claude.ai/public/artifacts/ec1efe9f-1871-424e-bc8f-10fd20199c73" target="_blank" class="card">
+                <div>
+                    <div class="card-header"><span class="step-badge">Basic</span></div>
+                    <h3>Call by Reference</h3>
+                    <p>값의 복사가 아닌 주소 참조를 통한 데이터 조작의 기초</p>
+                </div>
+                <div class="card-footer">자습하기 →</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/71426048-72e3-4a6e-9280-42604db4ca7e" target="_blank" class="card">
+                <div>
+                    <div class="card-header"><span class="step-badge">Advanced</span></div>
+                    <h3>Call by Reference - Array</h3>
+                    <p>배열의 이름이 가진 포인터적 특성과 함수 전달 방식</p>
+                </div>
+                <div class="card-footer">자습하기 →</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/fa29f3f3-f994-4e28-b0ed-053353da2ce1" target="_blank" class="card">
+                <div>
+                    <div class="card-header"><span class="step-badge">Example</span></div>
+                    <h3>포인터 함수 문자열 예제</h3>
+                    <p>문자열 포인터를 활용한 효율적인 데이터 처리 기법</p>
+                </div>
+                <div class="card-footer">자습하기 →</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/2d5f97b5-1444-49f1-90c1-363e98f987aa" target="_blank" class="card">
+                <div>
+                    <div class="card-header"><span class="step-badge">Deep Dive</span></div>
+                    <h3>포인터와 2차원 배열</h3>
+                    <p>다차원 메모리 구조에 대한 포인터적 접근과 활용</p>
+                </div>
+                <div class="card-footer">자습하기 →</div>
+            </a>
+        </div>
+
+        <div class="section-title">구조체와 고급 자료구조</div>
+        <div class="grid">
+            <a href="https://claude.ai/public/artifacts/61afa81a-4d83-4088-852c-7a7b1046bfaf" target="_blank" class="card">
+                <div>
+                    <div class="card-header"><span class="step-badge">Level 0</span></div>
+                    <h3>구조체 기초</h3>
+                    <p>사용자 정의 자료형의 선언과 멤버 변수 접근법</p>
+                </div>
+                <div class="card-footer">자습하기 →</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/4b710bef-88a4-4bd9-9ff6-3aafa4c4f490" target="_blank" class="card">
+                <div>
+                    <div class="card-header"><span class="step-badge">Level 0</span></div>
+                    <h3>구조체 함수 활용</h3>
+                    <p>함수의 인자로 구조체를 전달하고 반환하는 과정</p>
+                </div>
+                <div class="card-footer">자습하기 →</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/abfadfc4-172f-4da0-be24-869c926db33a" target="_blank" class="card">
+                <div>
+                    <div class="card-header"><span class="step-badge">Level 1</span></div>
+                    <h3>포인터 구조체 함수</h3>
+                    <p>화살표 연산자(->)를 활용한 동적 구조체 참조</p>
+                </div>
+                <div class="card-footer">자습하기 →</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/152c4b85-084b-4fec-acba-9e3d9b4b7ff6" target="_blank" class="card">
+                <div>
+                    <div class="card-header"><span class="step-badge">Level 2</span></div>
+                    <h3>구조체 배열과 포인터</h3>
+                    <p>대량의 데이터를 객체 단위로 관리하는 배열 시스템</p>
+                </div>
+                <div class="card-footer">자습하기 →</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/077fb5f9-f950-48b7-b993-4e1db5f056e2" target="_blank" class="card">
+                <div>
+                    <div class="card-header"><span class="step-badge">Level 3</span></div>
+                    <h3>링크드리스트(Linked List)</h3>
+                    <p>메모리 동적 할당을 이용한 연결 리스트 구현의 핵심</p>
+                </div>
+                <div class="card-footer">자습하기 →</div>
+            </a>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 Seyeong Coding Research Institute. All rights reserved.<br>
+        본 자료는 중등정보올림피아드 마스터 과정을 위해 설계되었습니다.
+    </footer>
+
+</body>
+</html>
