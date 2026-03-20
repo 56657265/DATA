@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Programming Tutorial Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .curriculum-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .item {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .number {
+            background: #eff6ff;
+            color: var(--primary-color);
+            font-weight: 800;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.1rem;
+        }
+
+        .title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .badge {
+            font-size: 0.85rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .arrow {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>C Programming Master</h1>
+        <p>단계별로 배우는 C언어 기초 프로그래밍 커리큘럼 1단계</p>
+        <p>세영코딩연구소</p>
+<label for="progress">1단계 진행률(progress)</label><br>
+            <progress id="progress" value="25" max="100">40%</progress>
+
+    </header>
+
+    <div class="container">
+        <div class="curriculum-list">
+            <a href="https://claude.ai/public/artifacts/9c170881-8e05-42b7-ac29-9da4e18d9839" target="_blank" class="item">
+                <div class="item-info">
+                    <div class="number">01</div>
+                    <div>
+                        <div class="title">입출력문</div>
+                        <span class="badge">기초 문법</span>
+                    </div>
+                </div>
+                <div class="arrow">→</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/9140d2a5-c55c-4a3c-b4c9-9007e819bf49" target="_blank" class="item">
+                <div class="item-info">
+                    <div class="number">02</div>
+                    <div>
+                        <div class="title">조건문 (if)</div>
+                        <span class="badge">제어문</span>
+                    </div>
+                </div>
+                <div class="arrow">→</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/b51a13f1-9e31-4401-8e41-aff838c57cc1" target="_blank" class="item">
+                <div class="item-info">
+                    <div class="number">03</div>
+                    <div>
+                        <div class="title">반복문 (for)</div>
+                        <span class="badge">제어문</span>
+                    </div>
+                </div>
+                <div class="arrow">→</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/cde313a0-8d53-4968-9da9-af4634a43d59" target="_blank" class="item">
+                <div class="item-info">
+                    <div class="number">04</div>
+                    <div>
+                        <div class="title">중첩 반복문</div>
+                        <span class="badge">응용 로직</span>
+                    </div>
+                </div>
+                <div class="arrow">→</div>
+            </a>
+
+            <a href="https://claude.ai/public/artifacts/3203455d-341c-462c-b5a0-86f10ef02b18" target="_blank" class="item">
+                <div class="item-info">
+                    <div class="number">05</div>
+                    <div>
+                        <div class="title">While 문</div>
+                        <span class="badge">조건 반복</span>
+                    </div>
+                </div>
+                <div class="arrow">→</div>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Coding Research Institute. All rights reserved.
+        <p>                      ph.D Kim. SmartCoding  :  iioii.net@gmail.com</p>
+
+    </footer>
+
+</body>
+</html>
